@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlowFood - Premium Food Delivery</title>
+    <meta name="description" content="Experience premium food delivery with a stunning Glassmorphism UI. Browse, interact, and order your favorite dishes.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="glass-header" id="main-header">
+            <div class="logo">
+                <i class="fa-solid fa-utensils"></i>
+                <span>GlowFood</span>
+            </div>
+            <nav>
+                <a href="#" class="active">Home</a>
+                <a href="#">Explore</a>
+                <a href="#">Offers</a>
+                <a href="#">Orders</a>
+                <a href="login.html">Login</a>
+            </nav>
+            <div class="header-actions">
+                <div class="search-bar glass-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search food...">
+                </div>
+                <div class="cart-btn glass-btn" id="cart-toggle">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </div>
+                <div class="profile-btn glass-btn">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content glass-card">
+                <h1>Savor the Flavor, Delivered with <span class="gradient-text">Elegance</span></h1>
+                <p>Browse through our curated list of premium dishes and experience the future of food delivery.</p>
+                <div class="hero-btns">
+                    <button class="primary-btn">Order Now</button>
+                    <button class="secondary-btn glass-btn">Explore Menu</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="categories-section">
+            <h2 class="section-title">Categories</h2>
+            <div class="categories-grid">
+                <div class="category-card glass-card active" data-category="all">
+                    <i class="fa-solid fa-border-all"></i>
+                    <span>All</span>
+                </div>
+                <div class="category-card glass-card" data-category="pizza">
+                    <i class="fa-solid fa-pizza-slice"></i>
+                    <span>Pizza</span>
+                </div>
+                <div class="category-card glass-card" data-category="burger">
+                    <i class="fa-solid fa-burger"></i>
+                    <span>Burgers</span>
+                </div>
+                <div class="category-card glass-card" data-category="sushi">
+                    <i class="fa-solid fa-shrimp"></i>
+                    <span>Sushi</span>
+                </div>
+                <div class="category-card glass-card" data-category="salad">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>Salads</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Food Items Grid -->
+        <section class="food-section">
+            <h2 class="section-title">Featured Dishes</h2>
+            <div class="food-grid" id="food-grid">
+                <!-- Food cards will be injected here by JS -->
+            </div>
+        </section>
+
+        <!-- Cart Sidebar -->
+        <div class="cart-sidebar glass-card" id="cart-sidebar">
+            <div class="cart-header">
+                <h3>Your Order</h3>
+                <button id="close-cart" class="glass-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items will be injected here -->
+                <div class="empty-cart-msg">Your cart is empty</div>
+            </div>
+            <div class="cart-footer">
+                <div class="total-section">
+                    <span>Total:</span>
+                    <span class="total-price" id="total-price">$0.00</span>
+                </div>
+                <button class="checkout-btn primary-btn">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass-footer">
+        <p>&copy; 2026 GlowFood. Powered by C++ Backend.</p>
+    </footer>
+
+    <!-- Order Modal -->
+    <div class="modal-overlay" id="order-modal" style="display: none;">
+        <div class="modal-content glass-card">
+            <button class="close-modal glass-btn" id="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-body">
+                <img src="" alt="" id="modal-img" class="modal-img">
+                <div class="modal-info">
+                    <h2 id="modal-title">Food Title</h2>
+                    <p id="modal-desc">Food description goes here.</p>
+                    <div class="modal-options">
+                        <div class="quantity-selector">
+                            <button class="glass-btn" id="qty-minus">-</button>
+                            <span id="qty-val">1</span>
+                            <button class="glass-btn" id="qty-plus">+</button>
+                        </div>
+                        <span class="modal-price" id="modal-price">$0.00</span>
+                    </div>
+                    <button class="primary-btn" id="confirm-order-btn">Confirm Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
