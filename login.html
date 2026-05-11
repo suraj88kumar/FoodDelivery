@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,31 +20,37 @@
             min-height: 100vh;
             padding: 20px;
         }
+
         .login-card {
             width: 100%;
             max-width: 400px;
             padding: 40px;
             text-align: center;
         }
+
         .login-card h1 {
             font-size: 2rem;
             font-weight: 800;
             margin-bottom: 10px;
         }
+
         .login-card p {
             color: var(--text-secondary);
             margin-bottom: 30px;
         }
+
         .form-group {
             margin-bottom: 20px;
             text-align: left;
         }
+
         .form-group label {
             display: block;
             font-weight: 600;
             margin-bottom: 8px;
             font-size: 0.9rem;
         }
+
         .form-group input {
             width: 100%;
             padding: 12px 15px;
@@ -54,14 +61,17 @@
             outline: none;
             transition: all 0.3s ease;
         }
+
         .form-group input:focus {
             border-color: var(--primary);
             box-shadow: 0 0 10px rgba(99, 102, 241, 0.1);
         }
+
         .login-btn {
             width: 100%;
             margin-top: 10px;
         }
+
         .signup-link {
             margin-top: 20px;
             display: block;
@@ -69,12 +79,14 @@
             text-decoration: none;
             font-size: 0.9rem;
         }
+
         .signup-link span {
             color: var(--primary);
             font-weight: 600;
         }
     </style>
 </head>
+
 <body>
     <div class="bg-glow"></div>
     <div class="bg-glow-2"></div>
@@ -87,7 +99,7 @@
             </div>
             <h1>Welcome Back</h1>
             <p>Please enter your details to continue</p>
-            
+
             <form id="login-form">
                 <div class="form-group">
                     <label for="email">Email Address</label>
@@ -99,7 +111,7 @@
                 </div>
                 <button type="submit" class="primary-btn login-btn" id="login-submit-btn">Login</button>
             </form>
-            
+
             <a href="#" class="signup-link">Don't have an account? <span>Sign up</span></a>
         </div>
     </div>
@@ -110,10 +122,10 @@
 
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            
+
             loginSubmitBtn.textContent = "Logging in...";
             loginSubmitBtn.disabled = true;
 
@@ -138,25 +150,26 @@
                     password: password
                 })
             })
-            .then(response => {
-                if (!response.ok) throw new Error('Login failed');
-                return response.json();
-            })
-            .then(data => {
-                alert('Login Successful! Redirecting to menu...');
-                localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('userEmail', email);
-                window.location.href = 'main.html';
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Login failed. (Make sure backend is running)');
-            })
-            .finally(() => {
-                loginSubmitBtn.textContent = "Login";
-                loginSubmitBtn.disabled = false;
-            });
+                .then(response => {
+                    if (!response.ok) throw new Error('Login failed');
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Login Successful! Redirecting to menu...');
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userEmail', email);
+                    window.location.href = 'main.html';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Login failed. (Make sure backend is running)');
+                })
+                .finally(() => {
+                    loginSubmitBtn.textContent = "Login";
+                    loginSubmitBtn.disabled = false;
+                });
         });
     </script>
 </body>
+
 </html>

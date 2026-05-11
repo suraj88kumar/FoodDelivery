@@ -1,49 +1,49 @@
 const foodData = [
     {
         id: 1,
-        title: "Neo-Pepperoni Pizza",
-        desc: "Classic pepperoni with a modern twist, featuring artisan cheese and fresh basil.",
-        price: 14.99,
+        title: "Tandoori Paneer Pizza",
+        desc: "Spicy tandoori paneer, bell peppers, and red onions with a mint mayo drizzle.",
+        price: 349.00,
         category: "pizza",
         img: "images/pizza.png"
     },
     {
         id: 2,
-        title: "Cyber-Gourmet Burger",
-        desc: "Juicy beef patty, melted cheddar, crispy bacon, and our secret sauce on a brioche bun.",
-        price: 12.49,
+        title: "Maharaja Burger",
+        desc: "Double veg patty, extra cheese, jalapenos, and a special spicy sauce on a brioche bun.",
+        price: 199.00,
         category: "burger",
         img: "images/burger.png"
     },
     {
         id: 3,
-        title: "Zen Sushi Platter",
-        desc: "A selection of fresh salmon and tuna nigiri, served with wasabi and pickled ginger.",
-        price: 18.99,
+        title: "Zen Salmon Roll",
+        desc: "Fresh salmon rolls with a hint of wasabi and pickled ginger.",
+        price: 499.00,
         category: "sushi",
         img: "images/sushi.png"
     },
     {
         id: 4,
-        title: "Quantum Quinoa Salad",
-        desc: "A vibrant mix of quinoa, avocado, cherry tomatoes, and cucumber with a light lime dressing.",
-        price: 9.99,
+        title: "Bombay Crunch Salad",
+        desc: "A vibrant mix of greens, peanuts, crispy noodles, and a tangy tamarind dressing.",
+        price: 149.00,
         category: "salad",
         img: "images/salad.png"
     },
     {
         id: 5,
-        title: "Truffle Fusion Pizza",
-        desc: "Wild mushrooms, truffle oil, and fresh mozzarella on a thin crust.",
-        price: 16.99,
+        title: "Butter Chicken Pizza",
+        desc: "Rich butter chicken gravy, succulent chicken pieces, and loaded mozzarella.",
+        price: 399.00,
         category: "pizza",
         img: "images/pizza.png"
     },
     {
         id: 6,
-        title: "Neon BBQ Burger",
-        desc: "Double patty, smoked BBQ sauce, onion rings, and pepper jack cheese.",
-        price: 13.99,
+        title: "Cheese Lava Burger",
+        desc: "A burger with a heart of melting cheese lava, topped with crispy onions.",
+        price: 249.00,
         category: "burger",
         img: "images/burger.png"
     }
@@ -82,15 +82,18 @@ function init() {
 // Render Food Cards
 function renderFood(items) {
     foodGrid.innerHTML = '';
+    if (items.length === 0) {
+        foodGrid.innerHTML = '<div class="no-results">No dishes found. Try a different search!</div>';
+        return;
+    }
+    
     items.forEach(item => {
         const card = document.createElement('div');
         card.className = 'food-card glass-card';
         card.setAttribute('data-category', item.category);
         card.style.cursor = 'pointer';
         
-        // Make the card clickable to open modal
         card.onclick = (e) => {
-            // Don't open modal if clicking the add button
             if (e.target.closest('.add-btn')) return;
             openModal(item.id);
         };
@@ -140,6 +143,19 @@ function setupEventListeners() {
         });
     });
 
+    // IMPROVEMENT: Real-time Search Functionality
+    const searchInput = document.querySelector('.glass-search input');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = foodData.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.desc.toLowerCase().includes(query)
+            );
+            renderFood(filtered);
+        });
+    }
+
     // Creative: Interactive Mouse Move for Cards (3D Tilt effect)
     foodGrid.addEventListener('mousemove', (e) => {
         const card = e.target.closest('.food-card');
@@ -167,7 +183,6 @@ function setupEventListeners() {
     // Modal Controls
     closeModalBtn.addEventListener('click', closeModal);
     
-    // Close modal on outside click
     orderModal.addEventListener('click', (e) => {
         if (e.target === orderModal) closeModal();
     });
@@ -189,6 +204,21 @@ function setupEventListeners() {
             placeOrder(currentModalItem.id, currentQty);
         }
     });
+
+    // IMPROVEMENT: Checkout Button Action
+    const checkoutBtn = document.querySelector('.checkout-btn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Your cart is empty! Add some delicious food first.');
+                return;
+            }
+            alert('🎉 Order Placed Successfully! Thank you for ordering with GlowFood. Your food is being prepared.');
+            cart = [];
+            updateCart();
+            cartSidebar.classList.remove('open');
+        });
+    }
 }
 
 // Modal Functions
@@ -262,7 +292,6 @@ function createFlyingElement(button, imgSrc) {
 
     document.body.appendChild(flyer);
 
-    // Animate to cart
     setTimeout(() => {
         flyer.style.top = `${cartRect.top + 10}px`;
         flyer.style.left = `${cartRect.left + 10}px`;
@@ -271,7 +300,6 @@ function createFlyingElement(button, imgSrc) {
         flyer.style.opacity = '0.5';
     }, 50);
 
-    // Remove after animation
     setTimeout(() => {
         flyer.remove();
     }, 850);
@@ -281,7 +309,6 @@ function createFlyingElement(button, imgSrc) {
 function placeOrder(id, qty) {
     const item = foodData.find(f => f.id === id);
     
-    // Show loading state
     confirmOrderBtn.textContent = "Placing Order...";
     confirmOrderBtn.disabled = true;
 
@@ -329,10 +356,8 @@ function placeOrder(id, qty) {
 
 // Update Cart
 function updateCart() {
-    // Update Count
     cartCount.textContent = cart.length;
     
-    // Update List
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<div class="empty-cart-msg">Your cart is empty</div>';
     } else {
@@ -352,18 +377,15 @@ function updateCart() {
         });
     }
     
-    // Update Total
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     totalPriceEl.textContent = `₹${total.toFixed(2)}`;
 }
 
-// Remove from Cart
 window.removeFromCart = function(index) {
     cart.splice(index, 1);
     updateCart();
 };
 
-// Pulse animation styles
 const style = document.createElement('style');
 style.innerHTML = `
 @keyframes pulse {
@@ -374,8 +396,14 @@ style.innerHTML = `
 .pulse {
     animation: pulse 0.3s ease;
 }
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 40px;
+    font-size: 1.2rem;
+}
 `;
 document.head.appendChild(style);
 
-// Run
 document.addEventListener('DOMContentLoaded', init);
